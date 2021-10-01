@@ -6,7 +6,7 @@ int main() {
     
 //    Zadanie_1
     
-    cout<<"Kulikov Vitaly Romanovich 211-352"<<endl;
+    cout<<"Vetrov Vladimir Vladimirovich 211-352"<<endl;
     
 //    Zadanie_2
     
@@ -63,7 +63,7 @@ int main() {
     cin>>a>>b;
     cout<<a<<"*x="<<b<<endl;
     cout<<"x="<<b<<"/"<<a<<endl;
-    cout<<"x="<<b/a<<endl;
+    cout<<"x="<<(double)(b/a)<<endl;
     x = b/a;
     cout<<"Answer:"<<x<<endl;
     
