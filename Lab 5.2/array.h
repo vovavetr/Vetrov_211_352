@@ -77,7 +77,15 @@ public:
 		std::cout << std::endl;
 	}
 
-
+	void print(double* arr) { //test
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < col; j++) {
+				std::cout << arr[i * (col)+j] << "\t";
+			}
+			std::cout << std::endl;
+		}
+		std::cout << std::endl;
+	}
 
 	/////////////////////////////////////////////////////////////////////// Сумма матриц
 
@@ -111,14 +119,14 @@ public:
 
 	int matrixmult(double* matr1, int col1, int rows1, double* matr2, int col2, int rows2) { //Наша матрица = первая матрица * вторая матрица
 		if (col1 == rows2) {
-			col = col1; rows = rows2;
-			matr = new double[rows * col];
+			col = col2; rows = rows1;
+			matr = new double[rows1 * col2];
 			for (int i = 0; i < rows1; i++)
 				for (int j = 0; j < col2; j++)
 				{
 					matr[i * col2 + j] = 0;
 					for (int k = 0; k < col1; k++)
-						matr[i * col2 + j] += matr1[i * col1 + k] + matr2[k * col2 + j];
+						matr[i * col2 + j] += matr1[i * col1 + k] * matr2[k * col2 + j];
 				}
 			return 0;
 		}
@@ -131,14 +139,23 @@ public:
 
 	int matrixmult(double* matr1, int col1, int rows1) { // Наша матрица = наша матрица * другая матрица
 		if (col == rows1) {
-			for (int i = 0; i < rows; i++)
-				for (int j = 0; j < col; j++)
-				{
-					matr[i * col1 + j] = 0;
+			double* temp_matr = new double[rows1 * col]{ 0 };
+
+			for (int i = 0; i < rows1; i++) {
+				for (int j = 0; j < col; j++) {
+					temp_matr[i * col1 + j] = 0;
 					for (int k = 0; k < col; k++)
-						matr[i * col1 + j] += matr[i * col + k] + matr1[k * col1 + j];
+						temp_matr[i * col + j] += matr1[i * col + k] * matr[k * col1 + j];
 				}
+			}
+			matr = new double[rows1 * col];
+			for (int i = 0; i < rows1; i++) {
+				for (int j = 0; j < col; j++) {
+					matr[i * col + j] = temp_matr[i * col + j];
+				}
+			}
 			return 0;
+			rows = rows1;
 		}
 		else {
 			std::cout << "Error of mult: sizes are not equal.";
