@@ -64,7 +64,7 @@ public:
 				{
 					matr[i * col2 + j] = 0;
 					for (int k = 0; k < col1; k++)
-						matr[i * col2 + j] += matr1[i * col1 + k] + matr2[k * col2 + j];
+						matr[i * col2 + j] += matr1[i * col1 + k] * matr2[k * col2 + j];
 				}
 			return 0;
 		}
