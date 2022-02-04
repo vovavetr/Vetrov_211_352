@@ -1,4 +1,5 @@
 #include <iostream>
+#include <ctime>
 
 using namespace std;
 
@@ -23,6 +24,7 @@ bool modeQuicksortComparison(people& z, people& x, string mode = "") {
 
 template <typename T>
 bool modeQuicksortComparison(T z, T x, string mode = "") {
+    
     if (mode != "") {
         return false;
     }
@@ -49,7 +51,7 @@ void quicksort(T* arr, int max, string mode = "") {
             first++;
         }
 
-        while (modeQuicksortComparison(arr[last], mid, mode)) {
+        while (modeQuicksortComparison(mid, arr[last], mode)) {
             last--;
         }
 
@@ -83,6 +85,7 @@ ostream& operator<<(ostream& o, const people& people) {
 }
 
 int getRandomNumber(int min, int maxim) {
+
     return min + rand() % (maxim - min + 1);
 }
 
@@ -93,6 +96,7 @@ double getRandomNumberDouble(double fMin, double fMax) {
 int main() {
     string sortMode;
     int peopleSize;
+    srand(time(NULL));
 
     cout << "People Size: " << endl;
     cin >> peopleSize;
@@ -153,9 +157,9 @@ int main() {
     cout << "Double: ";
     print(doubleArr, arrSize);
 
-    quicksort(intArr, arrSize - 1);
-    quicksort(chrArr, arrSize - 1);
-    quicksort(doubleArr, arrSize - 1);
+    quicksort(intArr, arrSize);
+    quicksort(chrArr, arrSize);
+    quicksort(doubleArr, arrSize);
     cout << endl;
 
     cout << "Sort: " << endl;
