@@ -6,10 +6,10 @@ using namespace std;
 struct people {
     string surname;
     string name;
-    int age = 0;
+    int age;
 };
 
-bool modeQuicksortComparison(people& z, people& x, string mode = "") {
+bool QSComparison(people& z, people& x, string mode = "") {
     if (mode == "surname") {
         return z.surname < x.surname;
     }
@@ -23,8 +23,7 @@ bool modeQuicksortComparison(people& z, people& x, string mode = "") {
 }
 
 template <typename T>
-bool modeQuicksortComparison(T z, T x, string mode = "") {
-    
+bool QSComparison(T z, T x, string mode = "") {
     if (mode != "") {
         return false;
     }
@@ -33,9 +32,9 @@ bool modeQuicksortComparison(T z, T x, string mode = "") {
 
 template <typename T>
 void swapPlaces(T& z, T& x) {
-    T tt = z;
+    T temp = z;
     z = x;
-    x = tt;
+    x = temp;
 }
 
 template <typename T>
@@ -47,14 +46,12 @@ void quicksort(T* arr, int max, string mode = "") {
     mid = arr[max / 2];
 
     while (last >= first) {
-        while (modeQuicksortComparison(arr[first], mid, mode)) {
+        while (QSComparison(arr[first], mid, mode)) {
             first++;
         }
-
-        while (modeQuicksortComparison(mid, arr[last], mode)) {
+        while (QSComparison(mid, arr[last], mode)) {
             last--;
         }
-
         if (last >= first) {
             swapPlaces(arr[last], arr[first]);
 
@@ -62,11 +59,9 @@ void quicksort(T* arr, int max, string mode = "") {
             last--;
         }
     }
-
     if (last > 0) {
         quicksort(arr, last + 1, mode);
     }
-
     if (first < max) {
         quicksort(&arr[first], max - first, mode);
     }
@@ -85,7 +80,6 @@ ostream& operator<<(ostream& o, const people& people) {
 }
 
 int getRandomNumber(int min, int maxim) {
-
     return min + rand() % (maxim - min + 1);
 }
 
@@ -94,24 +88,25 @@ double getRandomNumberDouble(double fMin, double fMax) {
 }
 
 int main() {
+    // Cтруктура данных <Surname, Name, Age>
     string sortMode;
-    int peopleSize;
+    int peopleCount;
     srand(time(NULL));
 
-    cout << "People Size: " << endl;
-    cin >> peopleSize;
+    cout << "People count: " << endl;
+    cin >> peopleCount;
 
-    people* peopleArr = new people[peopleSize];
+    people* peopleArr = new people[peopleCount];
 
-    cout << "Item (surname name age): " << endl;
-    for (int i = 0; i < peopleSize; i++) {
+    cout << "Input surname, name and age: " << endl;
+    for (int i = 0; i < peopleCount; i++) {
         cin >> peopleArr[i].surname >> peopleArr[i].name >> peopleArr[i].age;
     }
     cout << endl;
 
     while (true) {
-        cout << "Sort surname, name or age" << endl;
-        cout << "Break: break" << endl;
+        cout << "Sorting by: surname, name or age" << endl;
+        cout << "Type break to break" << endl;
 
         cin >> sortMode;
 
@@ -120,20 +115,20 @@ int main() {
         }
 
         cout << "No sort: " << endl;
-        print(peopleArr, peopleSize);
+        print(peopleArr, peopleCount);
         cout << endl;
 
-        quicksort(peopleArr, peopleSize, sortMode);
+        quicksort(peopleArr, peopleCount, sortMode);
 
         cout << "Sort: " << endl;
-        print(peopleArr, peopleSize);
+        print(peopleArr, peopleCount);
         cout << endl;
     }
-
     delete[] peopleArr;
 
-    int arrSize;
 
+    // Встроенние типы данных
+    int arrSize;
     cout << "Arr size: " << endl;
     cin >> arrSize;
 
@@ -147,32 +142,28 @@ int main() {
         doubleArr[i] = getRandomNumberDouble(0, 255.0);
     }
 
-    cout << "No sort: " << endl;
-    cout << "Int: ";
+    cout << "Not sorted: " << endl;
+    cout << "Integer: ";
     print(intArr, arrSize);
-
     cout << "Char: ";
     print(chrArr, arrSize);
-
     cout << "Double: ";
     print(doubleArr, arrSize);
 
     quicksort(intArr, arrSize);
     quicksort(chrArr, arrSize);
     quicksort(doubleArr, arrSize);
+
     cout << endl;
-
-    cout << "Sort: " << endl;
-    cout << "Int: ";
+    cout << "Sorted: " << endl;
+    cout << "Integer: ";
     print(intArr, arrSize);
-
     cout << "Char: ";
     print(chrArr, arrSize);
-
     cout << "Double: ";
     print(doubleArr, arrSize);
 
-        delete[] intArr;
-        delete[] chrArr;
-        delete[] doubleArr;
+    delete[] intArr;
+    delete[] chrArr;
+    delete[] doubleArr;
 }
